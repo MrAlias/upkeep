@@ -67,7 +67,7 @@ This defines operating system specific values to parameters and should not be di
 
 ### Public Classes
 
-#### upkeep::params
+#### upkeep
 
 Provides functionality for the unified way of rolling out package updates.
 
