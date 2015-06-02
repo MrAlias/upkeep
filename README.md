@@ -9,8 +9,10 @@
     * [Beginning with upkeep](#beginning-with-upkeep)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what upkeep is doing and how](#reference)
-5. [Limitations](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+    * [Private Classes](#private-classes)
+    * [Public Classes](#public-classes)
+6. [Limitations](#limitations)
+7. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
