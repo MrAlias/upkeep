@@ -83,7 +83,7 @@ class upkeep (
 
   exec { 'Make state file directory':
     command => "mkdir -p ${state_dir}",
-    path    => ['/bin', '/usr/bin']
+    path    => ['/bin', '/usr/bin'],
     creates => $state_dir,
   }
 
