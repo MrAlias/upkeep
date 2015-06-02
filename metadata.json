@@ -1,0 +1,14 @@
+{
+  "name": "MrAlias/upkeep",
+  "version": "0.1.0",
+  "author": "Tyler Yahn <codingalias@gmail.com>",
+  "summary": "Puppet module providing unified way to roll out package updates.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/MrAlias/upkeep.git",
+  "project_page": "https://github.com/MrAlias/upkeep",
+  "issues_url": "https://github.com/MrAlias/upkeep/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
