@@ -18,7 +18,9 @@ Provides a unified way to roll out package updates to an entire managed cluster.
 
 ## Module Description
 
-When Puppet in managing packages on more nodes than you care to log into and update manually, you need a way for Puppet to uniformly and safely update these packages.  This module is intended to do just that by working with the system's package manager.  A state file is stored locally on the system and when puppet updates this file a cascade of actions will update the desired packages on the system.
+When Puppet in managing packages on more nodes than you care to log into and update manually, you need a way for Puppet to uniformly and safely update these packages.  This module is intended to do just that by working with the system's package manager.
+
+Updates are done in two ways: safely and fully.  Fully updating the system is different in that it could delete unspecified packages. Both ways of updating are managed by state files containing date/time stamps (`full_timestamp` and `safe_timestamp`).  In practice these date/time stamps can be anything you want, the upgrade will happen whenever they changes.  However, future you will thank past you when you use a date/time stamp, as this helps keep a record of when packages were upgraded by upkeep.
 
 ## Setup
 
@@ -29,7 +31,7 @@ When Puppet in managing packages on more nodes than you care to log into and upd
 
 ### Beginning with upkeep
 
-To put in place all needed files but not have anything upgrade:
+To put in place all needed files but not have anything update:
 
 ```puppet
 include upkeep
@@ -37,25 +39,69 @@ include upkeep
 
 ## Usage
 
-In order to do a safe package upgrade (one that won't remove packages) of all upgradeable packages you can update the `timestamp` parameter here:
+In order to do a safe package upgrade, update the `safe_timestamp` parameter here:
 
 ```puppet
-upkeep::safe_upgrade {
-  timestamp => '2015-06-02_14:38:06',
+class { 'upkeep':
+  safe_timestamp => '2015-06-02_14:38:06',
 }
 ```
 
 While you can pass what you like to the `timestamp` parameter and puppet will preform the upgrade, it is in your best interest to pass a uniform and current datetime for your future reference.
 
-If a more extensive upgrade (i.e. one that potentially could remove packages or have unforeseen failures) has been checked and needs to be rolled out:
+If a more extensive upgrade (i.e. one that potentially could remove packages or have unforeseen failures), update the `full_timestamp`:
 
 ```puppet
-upkeep::dist_upgrade {
-  timestamp => '2015-06-02_14:38:06',
+class { 'upkeep':
+  full_timestamp => '2015-06-02_14:38:06',
 }
 ```
 
 ## Reference
+
+### Private Classes
+
+#### upkeep::params
+
+This defines operating system specific values to parameters and should not be directly used.
+
+### Public Classes
+
+#### upkeep::params
+
+Provides functionality for the unified way of rolling out package updates.
+
+##### `upkeep::state_dir`
+
+  Absolute path to where the state files are stored.
+
+##### `upkeep::full_upgrade_cmd`
+
+  Command that does a full package upgrade.
+
+##### `upkeep::full_timestamp`
+
+  A date/time specifying up to what point packages older then should be fully updated regardless of consequences.  If set to an empty string no update will happen.
+
+  Defaults to an empty string.
+
+##### `upkeep::safe_upgrade_cmd`
+
+  Command that does a safe package upgrade.
+
+##### `upkeep::safe_timestamp`
+
+  A date/time specifying up to what point packages older then should be safely updated.  If set to an empty string no update will happen.
+
+  Defaults to an empty string.
+
+##### `upkeep::manage_rkhunter`
+
+  If rkhunter is installed on the system it will likely complain if packages are upgraded with out it knowing about it.  This parameter specifies if rkhunter should be notified up package upgrades by having it run `rkhunter --propupd`.
+
+##### `upkeep::rkhunter`
+
+  Absolute path of the rkhunter executable to run if rkhunter is updated.
 
 ## Limitations
 
