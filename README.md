@@ -123,7 +123,7 @@ This module cuttently only supports RedHat and Debian based systems using `yum` 
 
 The module is built with the intent to support other operating systems with a bit of customization.  This likely means that you will have to provide update commands and possibly a place to store state files.
 
-*Caveat Emptor'*: this module has only been tested on the mentioned supported systems.
+*Caveat Emptor*: this module has only been tested on the mentioned supported systems.
 
 ## Development
 
