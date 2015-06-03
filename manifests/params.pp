@@ -23,7 +23,7 @@ class upkeep::params {
       $safe_upgrade_cmd = '/usr/bin/aptitude update && /usr/bin/aptitude upgrade -y'
     }
     default: {
-      fail("The ${module_name} module does not support an ${::osfamily} based system.")
+      warning("The ${module_name} module does not natively support ${::operatingsystem} operating systems.")
     }
   }
 }
