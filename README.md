@@ -16,7 +16,7 @@
 
 ## Overview
 
-Provides a unified way to roll out package updates to an entire managed cluster.
+Provides a unified way to roll out package updates to an entire Puppet managed cluster.
 
 ## Module Description
 
@@ -59,6 +59,18 @@ class { 'upkeep':
 }
 ```
 
+If you're not on a RedHat or Debian based systems using `yum` or `aptitude` you could still use upkeep to manage package updates.  You will need to provide update commands and possibly a place to store state files.  An example of doing so with an Archlinux system using `pacman` might look somethings like:
+
+```puppet
+class { 'upkeep':
+  safe_upgrade_cmd => 'pacman -Syyu',
+  state_dir        => '/etc/upkeep',
+  safe_timestamp   => '2015-06-02_14:38:06',
+}
+```
+
+Keep in mind that this is experimental and not actively tested.  If there are issues please [report](https://github.com/MrAlias/upkeep/issues) them.
+
 ## Reference
 
 ### Private Classes
@@ -99,7 +111,7 @@ Provides functionality for the unified way of rolling out package updates.
 
 ##### `upkeep::manage_rkhunter`
 
-  If rkhunter is installed on the system it will likely complain if packages are upgraded with out it knowing about it.  This parameter specifies if rkhunter should be notified up package upgrades by having it run `rkhunter --propupd`.
+  If rkhunter is installed on the system it will likely complain if packages are upgraded without it knowing about them.  This parameter specifies if rkhunter should be updated by runing `rkhunter --propupd`.
 
 ##### `upkeep::rkhunter`
 
@@ -107,8 +119,18 @@ Provides functionality for the unified way of rolling out package updates.
 
 ## Limitations
 
-This module is only compatible with RedHat and Debian based systems.
+This module cuttently only supports RedHat and Debian based systems using `yum` and `aptitude` package managers.
+
+The module is built with the intent to support other operating systems with a bit of customization.  This likely means that you will have to provide update commands and possibly a place to store state files.
+
+*Caveat Emptor'*: this module has only been tested on the mentioned supported systems.
 
 ## Development
 
 This module is open to collaboration and feedback.
+
+Guide lines for both:
+
+* Keep it clean
+* Keep it concise
+* Have an open mind
